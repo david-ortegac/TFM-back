@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\Logincontroller;
+use App\Http\Controllers\API\LoginController;
 
 Route::group([
     'middleware'=>'api',

@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class Logincontroller extends Controller
+class LoginController extends Controller
 {
 
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(): JsonResponse
     {
-        $credentials = credentials(['email', 'password']);
+        $credentials = request(['email', 'password']);
 
         if(! $token = auth(guard:'api')->attempt($credentials)){
             return response()->json(['error'=>'Unauthorized'], 401);
