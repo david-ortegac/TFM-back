@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('branch', function (Blueprint $table) {
+        Schema::create('branches', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('brand_id')->references('id')->on('brand');
+            $table->foreignId('brand_id')->references('id')->on('brands');
             $table->string('phone');
             $table->string('email');
             $table->string('address');

@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('qualify', function (Blueprint $table) {
+        Schema::create('qualifies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('brand_id')->references('id')->on('brand');
-            $table->foreignId('branch_id')->nullable()->references('id')->on('branch');
+            $table->foreignId('brand_id')->references('id')->on('brands');
+            $table->foreignId('branch_id')->nullable()->references('id')->on('branches');
             $table->foreignId('user_id')->references('id')->on('users');
             $table->boolean('qualify');
             $table->timestamps();

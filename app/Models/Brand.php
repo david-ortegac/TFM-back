@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Brand
@@ -27,7 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Brand extends Model
 {
-    
+
     protected $perPage = 20;
 
     /**
@@ -35,47 +37,54 @@ class Brand extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['property', 'phone', 'email', 'address', 'user_id', 'status'];
+    protected $fillable = [
+        'property',
+        'phone',
+        'email',
+        'address',
+        'user_id',
+        'status'
+    ];
 
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class, 'user_id', 'id');
     }
-    
+
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function branches()
     {
         return $this->hasMany(\App\Models\Branch::class, 'id', 'brand_id');
     }
-    
+
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function invoices()
     {
         return $this->hasMany(\App\Models\Invoice::class, 'id', 'brand_id');
     }
-    
+
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function offers()
     {
         return $this->hasMany(\App\Models\Offer::class, 'id', 'brand_id');
     }
-    
+
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function qualifies()
+    public function qualifies(): HasMany
     {
         return $this->hasMany(\App\Models\Qualify::class, 'id', 'brand_id');
     }
-    
+
 }

@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('offer', function (Blueprint $table) {
+        Schema::create('offers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('brand_id')->references('id')->on('brand');
+            $table->foreignId('brand_id')->references('id')->on('brands');
             $table->string('title');
             $table->string('description');
             $table->string('image')->nullable();

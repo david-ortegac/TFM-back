@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('invoice', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('brand_id')->references('id')->on('brand');
+            $table->foreignId('brand_id')->references('id')->on('brands');
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignId('offer_id')->references('id')->on('offer');
+            $table->foreignId('offer_id')->references('id')->on('offers');
             $table->date('date');
             $table->double('total');
             $table->string('status');
