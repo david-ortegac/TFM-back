@@ -6,13 +6,19 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Symfony\Component\HttpFoundation\Response;
 
 
-class BrandRequest extends FormRequest
+class UpdateBrandRequest extends FormRequest
 {
+    public mixed $property;
+    public mixed $name;
+    public mixed $phone;
+    public mixed $email;
+    public mixed $address;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -35,7 +41,7 @@ class BrandRequest extends FormRequest
     {
         return [
             'property' => 'required',
-            'name' => 'required|unique:brands',
+            'name' => ['required', Rule::unique('brands')->ignore($this->route('brand'), 'id')],
             'phone' => 'required',
             'email' => 'required|email',
             'address' => 'required',

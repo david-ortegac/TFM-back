@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('brands', function (Blueprint $table) {
             $table->id();
             $table->string('property');
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->string('description')->nullable();
             $table->string('phone');
             $table->string('email');
             $table->string('address');
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->boolean('status');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

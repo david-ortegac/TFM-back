@@ -16,11 +16,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property $address
  * @property $user_id
  * @property $status
+ * @property $name
+ * @property $description
  * @property $created_at
  * @property $updated_at
  *
  * @property User $user
  * @property Branch[] $branches
+ *
  * @property Invoice[] $invoices
  * @property Offer[] $offers
  * @property Qualify[] $qualifies
@@ -43,14 +46,16 @@ class Brand extends Model
         'email',
         'address',
         'user_id',
-        'status'
+        'status',
+        'name',
+        'description'
     ];
 
 
     /**
      * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(\App\Models\User::class, 'user_id', 'id');
     }
@@ -58,7 +63,7 @@ class Brand extends Model
     /**
      * @return HasMany
      */
-    public function branches()
+    public function branches(): HasMany
     {
         return $this->hasMany(\App\Models\Branch::class, 'id', 'brand_id');
     }
@@ -66,7 +71,7 @@ class Brand extends Model
     /**
      * @return HasMany
      */
-    public function invoices()
+    public function invoices(): HasMany
     {
         return $this->hasMany(\App\Models\Invoice::class, 'id', 'brand_id');
     }
@@ -74,7 +79,7 @@ class Brand extends Model
     /**
      * @return HasMany
      */
-    public function offers()
+    public function offers(): HasMany
     {
         return $this->hasMany(\App\Models\Offer::class, 'id', 'brand_id');
     }
