@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8mb4" collation="utf8mb4_general_ci">tfm</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="branches" view="colnames">
+<left>501</left>
+<top>75</top>
+<width>110</width>
+<height>214</height>
+<sql_create_table>CREATE TABLE `branches` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `brand_id` bigint(20) unsigned NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `branches_brand_id_foreign` (`brand_id`),
+  CONSTRAINT `branches_brand_id_foreign` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="brands" view="colnames">
+<left>180</left>
+<top>32</top>
+<width>110</width>
+<height>265</height>
+<sql_create_table>CREATE TABLE `brands` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `property` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `brands_name_unique` (`name`),
+  KEY `brands_user_id_foreign` (`user_id`),
+  CONSTRAINT `brands_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="invoice" view="colnames">
+<left>314</left>
+<top>319</top>
+<width>110</width>
+<height>231</height>
+<sql_create_table>CREATE TABLE `invoice` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `brand_id` bigint(20) unsigned NOT NULL,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `offer_id` bigint(20) unsigned NOT NULL,
+  `date` date NOT NULL,
+  `total` double NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `invoice_brand_id_foreign` (`brand_id`),
+  KEY `invoice_user_id_foreign` (`user_id`),
+  KEY `invoice_offer_id_foreign` (`offer_id`),
+  CONSTRAINT `invoice_brand_id_foreign` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`),
+  CONSTRAINT `invoice_offer_id_foreign` FOREIGN KEY (`offer_id`) REFERENCES `offers` (`id`),
+  CONSTRAINT `invoice_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="offers" view="colnames">
+<left>31</left>
+<top>370</top>
+<width>125</width>
+<height>265</height>
+<sql_create_table>CREATE TABLE `offers` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `brand_id` bigint(20) unsigned NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `price` double NOT NULL,
+  `discount` double NOT NULL,
+  `discount_type` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `offers_brand_id_foreign` (`brand_id`),
+  CONSTRAINT `offers_brand_id_foreign` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="qualifies" view="colnames">
+<left>780</left>
+<top>16</top>
+<width>110</width>
+<height>197</height>
+<sql_create_table>CREATE TABLE `qualifies` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `brand_id` bigint(20) unsigned NOT NULL,
+  `branch_id` bigint(20) unsigned DEFAULT NULL,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `qualify` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `qualifies_brand_id_foreign` (`brand_id`),
+  KEY `qualifies_branch_id_foreign` (`branch_id`),
+  KEY `qualifies_user_id_foreign` (`user_id`),
+  CONSTRAINT `qualifies_branch_id_foreign` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`),
+  CONSTRAINT `qualifies_brand_id_foreign` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`),
+  CONSTRAINT `qualifies_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="users" view="colnames">
+<left>612</left>
+<top>294</top>
+<width>145</width>
+<height>248</height>
+<sql_create_table>CREATE TABLE `users` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) DEFAULT 'user',
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `photo` varchar(255) DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

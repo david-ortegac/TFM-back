@@ -33,4 +33,5 @@ Route::apiResource('brands', BrandController::class);
 Route::post('brands/intranet', [BrandController::class, 'privateIndex'])->middleware(MIDDLEWARE_CONST);
 
 Route::apiResource('branches', BranchController::class);
+Route::post('branches/intranet', [BranchController::class, 'privateIndex'])->middleware(MIDDLEWARE_CONST);
 
